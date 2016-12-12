@@ -1,0 +1,47 @@
+{
+  "name": "databox-app-twitter-sentiment",
+  "version": "1.0.0",
+  "description": "Databox app to process twitter data",
+  "config": {
+    "registry": "registry.iotdatabox.com"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha",
+    "start": "node ./src/main.js",
+    "build": "docker build -t databox/databox-app-twitter-sentiment .",
+    "deploy": "docker tag databox/databox-app-twitter-sentiment $npm_package_config_registry/databox-app-twitter-sentiment && docker push $npm_package_config_registry/databox-app-twitter-sentiment",
+    "build-arm": "docker build -f Dockerfile-arm -t databox/databox-app-twitter-sentiment-arm .",
+    "deploy-arm": "docker tag databox/databox-app-twitter-sentiment-arm $npm_package_config_registry/databox-app-twitter-sentiment-arm && docker push $npm_package_config_registry/databox-app-twitter-sentiment-arm",
+    "clean": "node ./node_modules/modclean/bin/modclean.js -p ./node_modules/ -r",
+    "getshell": "docker exec -i -t databox-app-twitter-sentiment /bin/bash",
+    "kill": "docker kill databox-app-twitter-sentiment",
+    "attach": "docker attach databox-app-twitter-sentiment",
+    "shell": "docker run -i -t databox/databox-app-twitter-sentiment /bin/bash",
+    "local": "docker run -i -t databox/databox-app-twitter-sentiment"
+  },
+  "author": "Anthony Brown <Anthony.Brown@nottingham.ac.uk> ()",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/me-box/databox-app-twitter-sentiment/issues"
+  },
+  "homepage": "https://github.com/me-box/databox-app-twitter-sentiment#readme",
+  "dependencies": {
+    "basic-auth": "^1.1.0",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-session": "^1.14.2",
+    "macaroons.js": "^0.3.6",
+    "modclean": "",
+    "nedb": "^1.8.0",
+    "node-uuid": "^1.4.7",
+    "path-to-regexp": "^1.7.0",
+    "promise": "^7.1.1",
+    "request": "^2.75.0",
+    "ws": "^1.1.1"
+  },
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "mocha": "^3.1.2",
+    "supertest": "^2.0.0"
+  }
+}
