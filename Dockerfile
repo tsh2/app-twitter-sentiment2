@@ -5,7 +5,7 @@ RUN npm install && npm run clean
 
 ADD . .
 
-LABEL databox.type="store"
+LABEL databox.type="app"
 
 VOLUME ["/database"]
 
