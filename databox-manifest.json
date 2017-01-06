@@ -27,27 +27,45 @@
   
    "packages":[  
       {  
-         "name":"Twitter timeline sentiment analysis",
-         "purpose":"Performs sentiment analysis on a twitter timeline",
+         "name":"Twitter User timeline sentiment analysis",
+         "purpose":"Performs sentiment analysis on a twitter users timeline",
          "install":"optional",
          "risk":"",
          "benefits":"sentiment analysis",
-         "datastores":[  
-            {  
-               "name":"databox-driver-twitter-stream",
-               "type":"databox-driver-twitter-stream"
-            },
-            {  
-               "id":"userTimeLine",
-               "name":"userTimeLine",
-               "type":"twitterUserTimeLine"
-            }
-         ]
+         "datastores":["DS_twitterUserTimeLine"]
+      },
+      {  
+         "name":"Twitter Hashtag sentiment analysis",
+         "purpose":"Performs sentiment analysis on a set twitter hashtags",
+         "install":"optional",
+         "risk":"",
+         "benefits":"sentiment analysis",
+         "datastores":["DS_twitterHashTagStream"]
       }
    ],
    "allowed-combinations":[  
 
    ],
+  "datasources":[  
+            {  
+                "type":"twitterUserTimeLine",
+                "required":true,
+                "name":"twitterUserTimeLine",
+                "clientid":"DS_twitterUserTimeLine",
+                "granularities":[  
+
+                ]
+            },
+            {  
+                "type":"twitterHashTagStream",
+                "required":true,
+                "name":"twitterHashTagStream",
+                "clientid":"DS_twitterHashTagStream",
+                "granularities":[  
+
+                ]
+            }
+        ],
 
   "network-permissions": [
   ],
@@ -59,3 +77,4 @@
 
   "volumes": []
 }
+
