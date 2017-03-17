@@ -32,7 +32,7 @@
          "install":"optional",
          "risk":"",
          "benefits":"sentiment analysis",
-         "datastores":["DS_twitterUserTimeLine"]
+         "datastores":["DS_twitterUserTimeLine","DS_testActuator"]
       },
       {  
          "name":"Twitter Hashtag sentiment analysis",
@@ -52,6 +52,15 @@
                 "required":true,
                 "name":"twitterUserTimeLine",
                 "clientid":"DS_twitterUserTimeLine",
+                "granularities":[  
+
+                ]
+            },
+            {  
+                "type":"testActuator",
+                "required":true,
+                "name":"testActuator",
+                "clientid":"DS_testActuator",
                 "granularities":[  
 
                 ]
