@@ -13,6 +13,10 @@ const DATABOX_STORE_BLOB_ENDPOINT = process.env.DATABOX_APP_TWITTER_SENTIMENT_DA
 
 //The endpoint for the datasource requested in the manifest ( env var name derived from the id in the manifest)
 var DATASOURCE_DS_twitterUserTimeLine = JSON.parse(process.env.DATASOURCE_DS_twitterUserTimeLine || '{}');
+
+var DATASOURCE_DS_testActuator = JSON.parse(process.env.DATASOURCE_DS_testActuator  || '{}');
+var testActuatorUSER_ENDPOINT = DATASOURCE_DS_twitterUserTimeLine.href || '';
+
 console.log(DATASOURCE_DS_twitterUserTimeLine);
 const USER_TIMELINE_ENDPOINT = DATASOURCE_DS_twitterUserTimeLine.href || '';
 console.log(USER_TIMELINE_ENDPOINT);
@@ -41,6 +45,19 @@ app.get("/status", function(req, res) {
 var latestTweet = "{}";
 app.get("/ui", function(req, res) {
     res.send("<h2>" + latestTweet.text + "</h2>");
+});
+
+app.get("/ui/acctest", function(req, res) {
+    var endpointUrl = url.parse(testActuatorUSER_ENDPOINT);
+    var dsID = DATASOURCE_DS_testActuator['item-metadata'].filter((itm)=>{return itm.rel === 'urn:X-databox:rels:hasDatasourceid'; })[0].val;
+    var dsUrl = endpointUrl.protocol + '//' + endpointUrl.host;        
+    databox.timeseries.write(dsUrl,dsID,{'test':'ing 123'})
+    .then((body)=>{
+        res.send("<h2>OK > " + body + "</h2>");
+    })
+    .catch((error)=>{
+        res.send("<h2>ERROR::" + error + "</h2>");
+    });
 });
 
 //start the express server
@@ -100,7 +117,6 @@ console.log("waiting for DATABOX_STORE_BLOB_ENDPOINT", DATABOX_STORE_BLOB_ENDPOI
         var endpointUrl = url.parse(USER_TIMELINE_ENDPOINT);
         var dsID = DATASOURCE_DS_twitterUserTimeLine['item-metadata'].filter((itm)=>{return itm.rel === 'urn:X-databox:rels:hasDatasourceid'; })[0].val;
         var dsUrl = endpointUrl.protocol + '//' + endpointUrl.host;
-        var dsType = DATASOURCE_DS_twitterUserTimeLine['item-metadata'].filter((itm)=>{return itm.rel === 'urn:X-databox:rels:hasType';})[0].val;
         databox.timeseries.latest(dsUrl, dsID)
         .then((data)=>{
             console.log(data);
@@ -120,7 +136,7 @@ console.log("waiting for DATABOX_STORE_BLOB_ENDPOINT", DATABOX_STORE_BLOB_ENDPOI
             var dsUrl = endpointUrl.protocol + '//' + endpointUrl.host;
             console.log("[subscribing]",dsUrl,dsID);
             databox.subscriptions.subscribe(dsUrl,dsID,'ts')
-            .catch((err)=>{console.log("[ERROR subscribing]",err)});
+            .catch((err)=>{console.log("[ERROR subscribing]",err);});
 
             endpointUrl = url.parse(HASHTAG_ENDPOINT);
             dsID = DATASOURCE_DS_twitterHashTagStream['item-metadata'].filter((itm)=>{return itm.rel === 'urn:X-databox:rels:hasDatasourceid'; })[0].val;

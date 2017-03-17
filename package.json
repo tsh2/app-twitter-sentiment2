@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Databox app to process twitter data",
   "config": {
-    "registry": "registry.iotdatabox.com"
+    "registry": "localhost:5000"
   },
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha",
