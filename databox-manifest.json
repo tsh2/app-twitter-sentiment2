@@ -76,7 +76,11 @@
             }
         ],
 
-  "network-permissions": [
+  "export-whitelist": [
+    {
+      "url": "https://export.amar.io/",
+      "description": "Exports the calculated sentiment to amar.io"
+    }
   ],
   
 
