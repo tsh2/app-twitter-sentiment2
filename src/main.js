@@ -5,6 +5,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var session = require("express-session");
 var url = require("url");
+var sentiment = require('sentiment');
 
 const databox = require('node-databox');
 
@@ -148,6 +149,7 @@ console.log("waiting for DATABOX_STORE_BLOB_ENDPOINT", DATABOX_STORE_BLOB_ENDPOI
             dataEmitter.on('data',(hostname, dsID, data)=>{
                 console.log(hostname, dsID, data);
                 latestTweet = data;
+                databox.export.longpoll('https://export.amar.io/', { location: data.user.location, sentiment: sentiment(data.text) });
             });
 
             dataEmitter.on('error',(error)=>{

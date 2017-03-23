@@ -33,11 +33,12 @@
     "macaroons.js": "^0.3.6",
     "modclean": "",
     "nedb": "^1.8.0",
-    "node-databox": "^0.2.1",
+    "node-databox": "^0.3.0",
     "node-uuid": "^1.4.7",
     "path-to-regexp": "^1.7.0",
     "promise": "^7.1.1",
     "request": "^2.75.0",
+    "sentiment": "^3.0.1",
     "url": "^0.11.0",
     "ws": "^1.1.2"
   },
