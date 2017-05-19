@@ -3,24 +3,19 @@
 var https = require('https');
 var express = require("express");
 var bodyParser = require("body-parser");
-var session = require("express-session");
 var url = require("url");
 var fs = require("fs");
 var sentiment = require('sentiment');
 
 
 //The endpoint for my datastore (Where i can publish my sentiment data)
-const DATABOX_STORE_BLOB_ENDPOINT = process.env.DATABOX_APP_TWITTER_SENTIMENT_DATABOX_STORE_BLOB_ENDPOINT || '';
+const DATABOX_STORE_BLOB_ENDPOINT = process.env.DATABOX_STORE_ENDPOINT || '';
 
 //The endpoint for the datasource requested in the manifest ( env var name derived from the id in the manifest)
 var DATASOURCE_DS_twitterUserTimeLine = JSON.parse(process.env.DATASOURCE_DS_twitterUserTimeLine || '{}');
-
 var DATASOURCE_DS_testActuator = JSON.parse(process.env.DATASOURCE_DS_testActuator  || '{}');
 var testActuatorUSER_ENDPOINT = DATASOURCE_DS_twitterUserTimeLine.href || '';
-
-console.log(DATASOURCE_DS_twitterUserTimeLine);
 const USER_TIMELINE_ENDPOINT = DATASOURCE_DS_twitterUserTimeLine.href || '';
-console.log(USER_TIMELINE_ENDPOINT);
 
 //The endpoint for the datasource requested in the manifest ( env var name derived from the id in the manifest)
 var DATASOURCE_DS_twitterHashTagStream = JSON.parse(process.env.DATASOURCE_DS_twitterHashTagStream || '{}');
@@ -48,9 +43,9 @@ app.get("/status", function(req, res) {
     res.send(status);
 });
 
-var latestTweet = "{}";
+var latestTweet = {tweet:"No tweets received yet ...."};
 app.get("/ui", function(req, res) {
-    res.send("<h2>" + latestTweet.text + "</h2>");
+    res.send("<html><script>setTimeout(function(){window.location.reload,2000);};</script><body><h2><pre>" + JSON.stringify(latestTweet, null, 4) + "</pre></h2></body></html>");
 });
 
 app.get("/ui/acctest", function(req, res) {
@@ -116,8 +111,7 @@ databox.waitForStoreStatus(DATABOX_STORE_BLOB_ENDPOINT,'active')
         var dsUrl = endpointUrl.protocol + '//' + endpointUrl.host;
         databox.timeseries.latest(dsUrl, dsID)
         .then((data)=>{
-            console.log(data);
-            latestTweet = data[0].data;
+            latestTweet = { tweet:data[0].data.text, sentiment:sentiment(data.text) };
         })
         .catch((err)=>{
             console.log("[Error getting timeseries.latest]",dsUrl, dsID);
@@ -142,18 +136,11 @@ databox.waitForStoreStatus(DATABOX_STORE_BLOB_ENDPOINT,'active')
             databox.subscriptions.subscribe(dsUrl,dsID,'ts')
             .catch((err)=>{console.log("[ERROR subscribing]",err)});
 
-            //TODO reenable when export service has been fixed
-            /*dataEmitter.on('data',(hostname, dsID, data)=>{
-                console.log(hostname, dsID, data);
-                latestTweet = data;
-                databox.export.longpoll('https://export.amar.io/', { location: data.user.location, sentiment: sentiment(data.text) });
-            });*/
-
             dataEmitter.on('data',(hostname, dsID, data)=>{
-                console.log(hostname, dsID, data);
-                const tosave = { tweet:data.text, sentiment:sentiment(data.text) };
-                //TODO write to my store. 
+                latestTweet = { tweet:data.text, sentiment:sentiment(data.text) };
+                databox.export.longpoll('https://export.amar.io/', { location: data.user.location, sentiment: sentiment(data.text) });
             });
+
 
             dataEmitter.on('error',(error)=>{
                 console.log(error);
