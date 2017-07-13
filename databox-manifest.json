@@ -1,7 +1,7 @@
 {
   "manifest-version": 1,
 
-  "name": "databox-app-twitter-sentiment",
+  "name": "app-twitter-sentiment",
   "version": "0.1.0",
 
   "description": "A simple Databox example app for the twitter driver",
@@ -18,10 +18,10 @@
     "example"
   ],
 
-  "homepage": "https://github.com/me-box/databox-app-twitter-sentiment",
+  "homepage": "https://github.com/me-box/app-twitter-sentiment",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/me-box/databox-app-twitter-sentiment.git"
+    "url": "git+https://github.com/me-box/app-twitter-sentiment.git"
   },
 
   
@@ -85,7 +85,7 @@
   
 
   "resource-requirements": {
-    "store":"databox-store-blob"
+    "store":"store-json"
   },
 
   "volumes": []

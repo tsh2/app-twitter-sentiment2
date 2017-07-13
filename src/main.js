@@ -30,11 +30,6 @@ var credentials = {
   cert: HTTPS_SECRETS.clientcert || '',
 };		
 
-//TODO fix this in node-databox lib
-process.env.ARBITER_TOKEN = fs.readFileSync("/run/secrets/ARBITER_TOKEN",{encoding:'base64'});
-process.env.DATABOX_ARBITER_ENDPOINT = "https://databox-arbiter:8080";
-process.env.CM_HTTPS_CA_ROOT_CERT = fs.readFileSync("/run/secrets/DATABOX_ROOT_CA");
-const databox = require('node-databox');
 
 var app = express();
 
@@ -83,7 +78,7 @@ databox.waitForStoreStatus(DATABOX_STORE_BLOB_ENDPOINT,'active')
                 vendor: 'Databox Inc.',
                 type: 'twitterUserTimelineSentiment',
                 datasourceid: 'twitterUserTimelineSentiment',
-                storeType: 'databox-store-blob',
+                storeType: 'store-json',
             }),
             databox.catalog.registerDatasource(DATABOX_STORE_BLOB_ENDPOINT, {
                 description: 'Twitter hash tag sentiment',
@@ -91,7 +86,7 @@ databox.waitForStoreStatus(DATABOX_STORE_BLOB_ENDPOINT,'active')
                 vendor: 'Databox Inc.',
                 type: 'twitterHashTagSentiment',
                 datasourceid: 'twitterHashTagSentiment',
-                storeType: 'databox-store-blob',
+                storeType: 'store-json',
             })
       ];
     return Promise.all(proms);
@@ -99,7 +94,7 @@ databox.waitForStoreStatus(DATABOX_STORE_BLOB_ENDPOINT,'active')
   })
   .then(()=>{
 
-      //register for live streaming data from the databox-driver-twitter-stream
+      //register for live streaming data from the driver-twitter
       console.log("subscribing to datasources:", USER_TIMELINE_ENDPOINT, HASHTAG_ENDPOINT);
 
       var dataEmitter = null; 
