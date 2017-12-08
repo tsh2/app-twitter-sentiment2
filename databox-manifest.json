@@ -2,7 +2,7 @@
   "manifest-version": 1,
 
   "name": "app-twitter-sentiment",
-  "version": "0.1.0",
+  "version": "0.3.0",
 
   "description": "A simple Databox example app for the twitter driver",
   "author": "Anthony Brown <Anthony.Brown@nottingham.ac.uk> ()",
@@ -24,53 +24,53 @@
     "url": "git+https://github.com/me-box/app-twitter-sentiment.git"
   },
 
-  
-   "packages":[  
-      {  
+
+   "packages":[
+      {
          "name":"Twitter User timeline sentiment analysis",
          "purpose":"Performs sentiment analysis on a twitter users timeline",
-         "install":"optional",
+         "install":"required",
          "risk":"",
          "benefits":"sentiment analysis",
          "datastores":["DS_twitterUserTimeLine","DS_testActuator"]
       },
-      {  
+      {
          "name":"Twitter Hashtag sentiment analysis",
          "purpose":"Performs sentiment analysis on a set twitter hashtags",
-         "install":"optional",
+         "install":"required",
          "risk":"",
          "benefits":"sentiment analysis",
          "datastores":["DS_twitterHashTagStream"]
       }
    ],
-   "allowed-combinations":[  
+   "allowed-combinations":[
 
    ],
-  "datasources":[  
-            {  
+  "datasources":[
+            {
                 "type":"twitterUserTimeLine",
                 "required":true,
                 "name":"twitterUserTimeLine",
                 "clientid":"DS_twitterUserTimeLine",
-                "granularities":[  
+                "granularities":[
 
                 ]
             },
-            {  
+            {
                 "type":"testActuator",
                 "required":true,
                 "name":"testActuator",
                 "clientid":"DS_testActuator",
-                "granularities":[  
+                "granularities":[
 
                 ]
             },
-            {  
+            {
                 "type":"twitterHashTagStream",
                 "required":true,
                 "name":"twitterHashTagStream",
                 "clientid":"DS_twitterHashTagStream",
-                "granularities":[  
+                "granularities":[
 
                 ]
             }
@@ -82,7 +82,7 @@
       "description": "Exports the calculated sentiment to amar.io"
     }
   ],
-  
+
 
   "resource-requirements": {
     "store":"store-json"
@@ -90,4 +90,3 @@
 
   "volumes": []
 }
-
