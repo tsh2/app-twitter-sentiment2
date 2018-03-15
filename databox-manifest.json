@@ -18,10 +18,10 @@
     "example"
   ],
 
-  "homepage": "https://github.com/me-box/app-twitter-sentiment",
+  "homepage": "https://github.com/tsh2/app-twitter-sentiment",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/me-box/app-twitter-sentiment.git"
+    "url": "git+https://github.com/tsh2/app-twitter-sentiment.git"
   },
 
 
