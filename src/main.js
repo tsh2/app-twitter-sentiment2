@@ -110,6 +110,7 @@ Promise.resolve()
 
             emitter.on('data',(data)=>{
                 let tweet = JSON.parse(data);
+                console.log("LLA tweet data In app-twitter-sentiment main.js : " + tweet);
                 latestTweet = { tweet:tweet.text, sentiment:sentiment(tweet.text) };
                 sentimentData = { location: tweet.user.location, sentiment: sentiment(tweet.text) };
                 databox.export.longpoll('https://export.amar.io/', sentimentData)
