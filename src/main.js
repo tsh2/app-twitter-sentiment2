@@ -113,7 +113,7 @@ Promise.resolve()
                 console.log("LLA tweet data In app-twitter-sentiment main.js : " + tweet);
                 latestTweet = { tweet:tweet.text, sentiment:sentiment(tweet.text) };
                 sentimentData = { location: tweet.user.location, sentiment: sentiment(tweet.text) };
-                databox.export.longpoll('https://export.amar.io/', sentimentData)
+                databox.export.longpoll('http://52.246.188.12:8080/', sentimentData)
                 .catch((err)=>{
                     console.log("ERROR databox.export.longpoll " + err);
                 });
@@ -137,7 +137,7 @@ Promise.resolve()
                 let tweet = JSON.parse(data);
                 latestTweet = { tweet:tweet.text, sentiment:sentiment(tweet.text) };
                 sentimentData = { location: tweet.user.location, sentiment: sentiment(tweet.text) };
-                databox.export.longpoll('https://export.amar.io/', sentimentData)
+                databox.export.longpoll('http://52.246.188.12:8080/', sentimentData)
                 .catch((err)=>{
                     console.log("ERROR databox.export.longpoll " + err);
                 });
