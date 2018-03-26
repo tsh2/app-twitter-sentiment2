@@ -78,7 +78,7 @@
 
   "export-whitelist": [
     {
-      "url": "https://export.amar.io/",
+      "url": "http://52.246.188.12:8080/",
       "description": "Exports the calculated sentiment to amar.io"
     }
   ],
